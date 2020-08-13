@@ -31,7 +31,7 @@ Jinja2==2.11.2
 langtable==0.0.51
 lazy-object-proxy==1.4.3
 lxml==4.4.1
-Mako==1.1.1.dev0
+Mako==1.1.1
 MarkupSafe==1.1.1
 mccabe==0.6.1
 nftables==0.1
