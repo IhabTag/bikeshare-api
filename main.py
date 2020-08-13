@@ -31,11 +31,25 @@ def api_chicago():
 @app.route('/api/washington', methods=['GET'])
 @cross_origin()
 def api_washington():
-    return jsonify(data.chicago)
+    months = json.loads(request.args.get('months'))
+    months = list(map(int, months))
+    days = json.loads(request.args.get('days'))
+    days = list(map(int, days))
+    if not months or not days:
+        return "Months and Days are required", 400
+    else:
+        return jsonify(fn.execute_analysis('washington', months, days))
 
 @app.route('/api/newyork', methods=['GET'])
 @cross_origin()
 def api_newyork():
-    return jsonify(data.chicago)
+    months = json.loads(request.args.get('months'))
+    months = list(map(int, months))
+    days = json.loads(request.args.get('days'))
+    days = list(map(int, days))
+    if not months or not days:
+        return "Months and Days are required", 400
+    else:
+        return jsonify(fn.execute_analysis('new_york_city', months, days))
 
 app.run()
