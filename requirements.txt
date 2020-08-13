@@ -20,7 +20,6 @@ decorator==4.4.0
 distro==1.4.0
 Flask==1.1.2
 Flask-Cors==3.0.8
-fros==1.1
 frozendict==1.2
 gpg==1.14.0
 gunicorn==20.0.4
