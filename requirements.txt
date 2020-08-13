@@ -4,7 +4,6 @@ backcall==0.2.0
 Beaker==1.10.0
 beautifulsoup4==4.9.1
 blivet==3.2.2
-Brlapi==0.7.0
 cffi==1.14.0
 chardet==3.0.4
 chrome-gnome-shell==0.0.0
