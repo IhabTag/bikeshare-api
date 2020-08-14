@@ -6,7 +6,7 @@ import functions as fn
 import json
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
