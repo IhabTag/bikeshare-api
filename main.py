@@ -6,7 +6,7 @@ import functions as fn
 import json
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -26,7 +26,7 @@ def api_chicago():
     if not months or not days:
         return "Months and Days are required", 400
     else:
-        return jsonify(fn.execute_analysis('chicago', months, days))
+        return jsonify(fn.execute_analysis(fn.get_df('chicago', months, days)))
 
 @app.route('/api/washington', methods=['GET'])
 @cross_origin()
@@ -38,7 +38,7 @@ def api_washington():
     if not months or not days:
         return "Months and Days are required", 400
     else:
-        return jsonify(fn.execute_analysis('washington', months, days))
+        return jsonify(fn.execute_analysis(fn.get_df('washington', months, days)))
 
 @app.route('/api/newyork', methods=['GET'])
 @cross_origin()
@@ -50,4 +50,57 @@ def api_newyork():
     if not months or not days:
         return "Months and Days are required", 400
     else:
-        return jsonify(fn.execute_analysis('new_york_city', months, days))
+        return jsonify(fn.execute_analysis(fn.get_df('new_york_city', months, days)))
+
+# Users
+
+@app.route('/api/chicago/users', methods=['GET'])
+@cross_origin()
+def api_chicago_users():
+    months = json.loads(request.args.get('months'))
+    months = list(map(int, months))
+    days = json.loads(request.args.get('days'))
+    days = list(map(int, days))
+    start = int(json.loads(request.args.get('start')))
+    end = int(json.loads(request.args.get('end')))
+
+    df = fn.get_df('chicago', months, days)
+    users = fn.getUsers(df, start, end).to_json(orient='index')
+    parsed_users = json.loads(users)
+    return parsed_users
+
+@app.route('/api/washington/users', methods=['GET'])
+@cross_origin()
+def api_washington_users():
+    months = json.loads(request.args.get('months'))
+    months = list(map(int, months))
+    days = json.loads(request.args.get('days'))
+    days = list(map(int, days))
+    start = int(json.loads(request.args.get('start')))
+    end = int(json.loads(request.args.get('end')))
+    
+    if not start or not end:
+        return "Something went wrong", 400
+    else:
+        df = fn.get_df('washington', months, days)
+        users = fn.getUsers(df, start, end).to_json(orient='index')
+        parsed_users = json.loads(users)
+        return parsed_users
+
+@app.route('/api/newyork/users', methods=['GET'])
+@cross_origin()
+def api_newyork_users():
+    months = json.loads(request.args.get('months'))
+    months = list(map(int, months))
+    days = json.loads(request.args.get('days'))
+    days = list(map(int, days))
+    start = int(json.loads(request.args.get('start')))
+    end = int(json.loads(request.args.get('end')))
+    
+    if not start or not end:
+        return "Something went wrong", 400
+    else:
+        df = fn.get_df('new_york_city', months, days)
+        users = fn.getUsers(df, start, end).to_json(orient='index')
+        parsed_users = json.loads(users)
+        return parsed_users

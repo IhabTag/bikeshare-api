@@ -7,10 +7,10 @@ def df_city(city):
     city = city + ".csv"
     filename = pd.read_csv(city)
     df = pd.DataFrame(filename)
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
-    df['month'] = df['Start Time'].dt.month
-    df['week day'] = df['Start Time'].dt.dayofweek
-    df['hour'] = df['Start Time'].dt.hour
+    df['Start Timestamp'] = pd.to_datetime(df['Start Time'])
+    df['month'] = df['Start Timestamp'].dt.month
+    df['week day'] = df['Start Timestamp'].dt.dayofweek
+    df['hour'] = df['Start Timestamp'].dt.hour
     df['trip'] = df['Start Station'] + " to " + df['End Station']
 
     return df
@@ -90,14 +90,14 @@ def user_stats(df):
 
     # Display counts of gender
     
-    males_count = df['Gender'].value_counts()[0]
-    females_count = df['Gender'].value_counts()[1]
+    males_count = df['Gender'].value_counts()[0] if 'Gender' in df.columns else 0
+    females_count = df['Gender'].value_counts()[1] if 'Gender' in df.columns else 0
 
     # Display earliest, most recent, and most common year of birth
     
-    min_db_year = int(df['Birth Year'].min())
-    max_db_year = int(df['Birth Year'].max())
-    mode_db_year = int(df['Birth Year'].mode()[0])
+    min_db_year = int(df['Birth Year'].min()) if 'Birth Year' in df.columns else 0
+    max_db_year = int(df['Birth Year'].max()) if 'Birth Year' in df.columns else 0
+    mode_db_year = int(df['Birth Year'].mode()[0]) if 'Birth Year' in df.columns else 0
 
     stats = {
         "subscriber" : int(subscribers_count),
@@ -112,14 +112,20 @@ def user_stats(df):
 
     return stats
 
-def execute_analysis(city, months, days):
-    
+def get_df(city, months, days):
     my_df_city = df_city(city)
     my_df_months = df_months(my_df_city, months)
     my_df_day = df_days(my_df_months, days)
+    return my_df_day
 
-    my_time_stats          = time_stats(my_df_day)
-    my_station_stats       = station_stats(my_df_day)
-    my_trip_duration_stats = trip_duration_stats(my_df_day)
-    my_user_stats          = user_stats(my_df_day)
+def execute_analysis(df):
+
+    my_time_stats          = time_stats(df)
+    my_station_stats       = station_stats(df)
+    my_trip_duration_stats = trip_duration_stats(df)
+    my_user_stats          = user_stats(df)
     return [my_time_stats, my_station_stats, my_trip_duration_stats, my_user_stats]
+
+def getUsers(df, start=0, end=10):
+    sliced_df = df[start : end]
+    return sliced_df
