@@ -51,5 +51,3 @@ def api_newyork():
         return "Months and Days are required", 400
     else:
         return jsonify(fn.execute_analysis('new_york_city', months, days))
-
-app.run()
