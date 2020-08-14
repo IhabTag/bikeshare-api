@@ -79,13 +79,11 @@ def api_washington_users():
     start = int(json.loads(request.args.get('start')))
     end = int(json.loads(request.args.get('end')))
     
-    if not start or not end:
-        return "Something went wrong", 400
-    else:
-        df = fn.get_df('washington', months, days)
-        users = fn.getUsers(df, start, end).to_json(orient='index')
-        parsed_users = json.loads(users)
-        return parsed_users
+    df = fn.get_df('washington', months, days)
+    print(df.head())
+    users = fn.getUsers(df, start, end).to_json(orient='index')
+    parsed_users = json.loads(users)
+    return parsed_users
 
 @app.route('/api/newyork/users', methods=['GET'])
 @cross_origin()
@@ -97,10 +95,7 @@ def api_newyork_users():
     start = int(json.loads(request.args.get('start')))
     end = int(json.loads(request.args.get('end')))
     
-    if not start or not end:
-        return "Something went wrong", 400
-    else:
-        df = fn.get_df('new_york_city', months, days)
-        users = fn.getUsers(df, start, end).to_json(orient='index')
-        parsed_users = json.loads(users)
-        return parsed_users
+    df = fn.get_df('new_york_city', months, days)
+    users = fn.getUsers(df, start, end).to_json(orient='index')
+    parsed_users = json.loads(users)
+    return parsed_users

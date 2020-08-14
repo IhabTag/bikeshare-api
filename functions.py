@@ -26,7 +26,7 @@ def df_days(df_months, days):
     df_days = pd.DataFrame()
     for day in days:
         df_selected_day = df_months[df_months['week day'] == day]
-        df_days = df_days.append(df_selected_day)
+        df_days = df_days.append(df_selected_day, ignore_index = True)
     return df_days
 
 def time_stats(df):
@@ -126,6 +126,6 @@ def execute_analysis(df):
     my_user_stats          = user_stats(df)
     return [my_time_stats, my_station_stats, my_trip_duration_stats, my_user_stats]
 
-def getUsers(df, start=0, end=10):
+def getUsers(df, start=0, end=5):
     sliced_df = df[start : end]
     return sliced_df
