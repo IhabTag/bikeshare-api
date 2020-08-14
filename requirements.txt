@@ -15,7 +15,6 @@ cryptography==2.8
 cssselect==1.1.0
 cytoolz==0.10.1
 dasbus==0.2
-dbus-python==1.2.16
 decorator==4.4.0
 distro==1.4.0
 Flask==1.1.2
