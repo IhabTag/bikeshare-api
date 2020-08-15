@@ -1,1 +1,4 @@
 __pycache__
+.gitignore
+submission
+bikeshare_2.py
