@@ -3,8 +3,8 @@
 
   
 
-> CLI was added to the project root directory
-> You can run as follow:
+> CLI was added to the project's root directory to make it possible to **test "raw user inputs"**. You can run as follow:
+> 
 > - Download the project and open the root directory from terminal
 > - Run  `$ python bikeshare_cli.py`
 > **Important Note:**
