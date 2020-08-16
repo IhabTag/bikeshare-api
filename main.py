@@ -100,7 +100,6 @@ def api_washington_users():
     end = int(json.loads(request.args.get('end')))
     
     df = fn.get_df('washington', months, days)
-    print(df.head())
     users = fn.get_users(df, start, end).to_json(orient='index')
 
     # Parsing users data as json object
